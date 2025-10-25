@@ -24,6 +24,8 @@ namespace Bulky.DataAccess.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
 
+        public DbSet<Company> Companies { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
              base.OnModelCreating(modelBuilder);
@@ -121,6 +123,40 @@ namespace Bulky.DataAccess.Data
                     ImageURL = ""
                 }
             );
+
+            modelBuilder.Entity<Company>().HasData(
+                new Company
+                {
+                    Id = 5,
+                    Name = "Tech Solution",
+                    StreetAddress = "123 Tech St",
+                    City = "Tech City",
+                    PostalCode = 12121,
+                    State = "IL",
+                    PhoneNumber = "6669990000"
+                },
+                new Company
+                {
+                    Id = 6,
+                    Name = "Vivid Books",
+                    StreetAddress = "999 Vid St",
+                    City = "Vivid City",
+                    PostalCode = 66666,
+                    State = "IL",
+                    PhoneNumber = "7779990000"
+                },
+                new Company
+                {
+                    Id = 7,
+                    Name = "Readers Club",
+                    StreetAddress = "999 Main St",
+                    City = "Lala Land",
+                    PostalCode = 99999,
+                    State = "NY",
+                    PhoneNumber = "1113335555"
+                }
+            );
+
         }
     }
 }
