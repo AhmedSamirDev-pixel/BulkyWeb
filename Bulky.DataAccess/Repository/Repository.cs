@@ -33,15 +33,20 @@ namespace Bulky.DataAccess.Repository
         }
 
         // Get a single entity that matches a filter condition
-        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null)
+        public T Get(Expression<Func<T, bool>> filter, string? includeProperties = null, 
+            bool tracked = false)
         {
             // dbSet is of type DbSet<T>, which implements IQueryable<T>
             IQueryable<T> query = dbSet;
+            if (tracked)
+                query = dbSet;
+
+            else
+                query = dbSet.AsNoTracking();
 
             // Using IQueryable here means the filter will be translated to SQL
             // and executed in the database (not in memory).
             query = query.Where(filter);
-
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach (var includeProp in includeProperties.
@@ -57,9 +62,12 @@ namespace Bulky.DataAccess.Repository
         }
 
         // Get all records from the DbSet (table)
-        public IEnumerable<T> GetAll(string? includeProperties = null) // Optional Parameter
+        public IEnumerable<T> GetAll(Expression<Func<T, bool>>? filter, string? includeProperties = null) // Optional Parameter
         {
             IQueryable<T> query = dbSet;
+            if (filter != null)
+                query = query.Where(filter);
+
             if (!string.IsNullOrEmpty(includeProperties))
             {
                 foreach(var includeProp in includeProperties.
