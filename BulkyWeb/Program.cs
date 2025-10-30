@@ -5,6 +5,7 @@ using Bulky.DataAccess.Repository;
 using Microsoft.AspNetCore.Identity;
 using Bulky.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Stripe;
 
 namespace BulkyWeb
 {
@@ -25,6 +26,7 @@ namespace BulkyWeb
                 => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+            builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 
             builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options
@@ -57,6 +59,8 @@ namespace BulkyWeb
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            
+            StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Secretkey").Get<string>();
 
             app.UseRouting();
 
