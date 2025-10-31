@@ -22,7 +22,8 @@
                         </div>
                         <div class="py-2 col-12">
                             <label asp-for="Product.Description" class="ms-2 text-muted"></label>
-                            <textarea asp-for="Product.Description" class="form-control border-0 shadow"></textarea>
+                            @* <textarea asp-for="Product.Description" class="form-control border-0 shadow"></textarea> *@
+                            <textarea asp-for="Product.Description" id="editor" class="form-control"></textarea>
                         </div>
                         <div class="form-floating py-2 col-12">
                             <input asp-for="Product.ISBN" class="form-control border-0 shadow" />
@@ -99,7 +100,16 @@
 
 
 @section Scripts {
+
     <script>
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
+
+    @* <script>
         tinymce.init({
           selector: 'textarea',
           plugins: [
@@ -120,7 +130,8 @@
           uploadcare_public_key: '8977267e0165ffe67037',
         });
 
-    </script>
+    </script> *@
+    
     @{
         <partial name="_ValidationScriptsPartial" />
     }
