@@ -42,6 +42,12 @@ namespace BulkyWeb
                 options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
             });
 
+            builder.Services.AddAuthentication().AddFacebook(options =>
+            {
+                options.AppId = "1874964143897345";
+                options.AppSecret = "a4628597a9c3905caa014829c6383355";
+            });
+
             builder.Services.AddDistributedMemoryCache();
             builder.Services.AddSession(options => {
                 options.IdleTimeout = TimeSpan.FromMinutes(100);
@@ -73,7 +79,7 @@ namespace BulkyWeb
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();   
             app.MapRazorPages();
 
             app.MapControllerRoute(
