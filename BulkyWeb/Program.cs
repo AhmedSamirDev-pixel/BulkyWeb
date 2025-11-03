@@ -1,10 +1,11 @@
 using Bulky.DataAccess.Data;
-using Bulky.DataAccess.Repository.IRepository;
-using Microsoft.EntityFrameworkCore;
+using Bulky.DataAccess.DbInitializer;
 using Bulky.DataAccess.Repository;
-using Microsoft.AspNetCore.Identity;
+using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Utility;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using Stripe;
 
 namespace BulkyWeb
@@ -22,19 +23,20 @@ namespace BulkyWeb
             // The class who use the DbContext is ApplicationDbContext.
             // Tell DbContext that we will use sql server
             // Passing connection string
-            builder.Services.AddDbContext<ApplicationDbContext>(option 
+            builder.Services.AddDbContext<ApplicationDbContext>(option
                 => option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
             builder.Services.Configure<StripeSettings>(builder.Configuration.GetSection("Stripe"));
 
 
-            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options
-            .SignIn
-            .RequireConfirmedAccount = true)
+            builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = false; // Allow login without email confirmation
+            })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
-
+            
             builder.Services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = $"/Identity/Account/Login";
@@ -49,12 +51,14 @@ namespace BulkyWeb
             });
 
             builder.Services.AddDistributedMemoryCache();
-            builder.Services.AddSession(options => {
+            builder.Services.AddSession(options =>
+            {
                 options.IdleTimeout = TimeSpan.FromMinutes(100);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
             });
 
+            builder.Services.AddScoped<IDbInitializer, DbInitializer>();
             builder.Services.AddRazorPages();
             builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
             builder.Services.AddScoped<IEmailSender, EmailSender>();
@@ -72,21 +76,30 @@ namespace BulkyWeb
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-            
+
             StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:Secretkey").Get<string>();
 
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
-            app.UseSession();   
+            app.UseSession();
             app.MapRazorPages();
-
+            SeedDatabase(app);
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
+        }
+
+        static void SeedDatabase(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+                dbInitializer.Initialize();
+            }
         }
     }
 }
