@@ -132,7 +132,7 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 // it's a regular customer account and we need to capture payment
                 // strip logic would go here later
 
-                var domain = "https://localhost:7004";
+                var domain = Request.Scheme+"://"+Request.Host.Value+"/";
                 var options = new Stripe.Checkout.SessionCreateOptions
                 {
                     SuccessUrl = domain + "/Customer/Cart/OrderConfirmation?id=" + shoppingCartVm.OrderHeader.Id,
