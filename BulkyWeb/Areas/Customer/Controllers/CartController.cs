@@ -133,11 +133,11 @@ namespace BulkyWeb.Areas.Customer.Controllers
                 // strip logic would go here later
 
                 var domain = Request.Scheme+"://"+Request.Host.Value+"/";
-                var options = new Stripe.Checkout.SessionCreateOptions
+                var options = new SessionCreateOptions
                 {
-                    SuccessUrl = domain + "/Customer/Cart/OrderConfirmation?id=" + shoppingCartVm.OrderHeader.Id,
-                    CancelUrl = domain + "/Customer/Cart/Index",
-                    LineItems = new List<Stripe.Checkout.SessionLineItemOptions>(),
+                    SuccessUrl = domain + $"Customer/cart/OrderConfirmation?id={shoppingCartVm.OrderHeader.Id}",
+                    CancelUrl = domain + "Customer/cart/index",
+                    LineItems = new List<SessionLineItemOptions>(),
                     Mode = "payment",
                 };
 
