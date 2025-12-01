@@ -10,9 +10,13 @@ Bulky is a complete e-commerce platform that simplifies online shopping and prod
 
 * Create, edit, and manage product information including title, description, ISBN, author, pricing tiers, and product images.
 
+
+
 ###  **📂 Category & Company Management**:
 
 * Manage product categories and company information to organize your catalog.
+
+
 
 ###  **👤 Authentication & Authorization**:
 
@@ -28,9 +32,13 @@ Bulky is a complete e-commerce platform that simplifies online shopping and prod
 
 * Includes login, registration, and external authentication.
 
+
+
 ###  **🛒 Shopping Cart**:
 
 * Customers can add items, modify quantities, and proceed to checkout.
+
+
 
 ###  **📦 Order & Checkout System**:
 
@@ -44,6 +52,8 @@ Bulky is a complete e-commerce platform that simplifies online shopping and prod
 
   * Admin order management
 
+
+
 ###  **💳 Stripe Payment Integration**:
 
 * Secure online payments using Stripe Checkout:
@@ -51,6 +61,8 @@ Bulky is a complete e-commerce platform that simplifies online shopping and prod
   * Supports card payments
 
   * Order status automatically updates based on payment outcome
+
+
 
 ###  **⚙️ Database Initialization**:
 
@@ -62,9 +74,13 @@ Bulky is a complete e-commerce platform that simplifies online shopping and prod
 
   * Seed categories and companies (optional)
 
+
+
 ###  **✉️ Email Notifications**:
 
 * Email sender service for identity and order updates (configurable with SMTP).
+
+
 
 ###  **📁 Clean Architecture**:
 
@@ -78,6 +94,8 @@ Bulky is a complete e-commerce platform that simplifies online shopping and prod
 
   * Separation of Concerns across layers
 
+
+
 ###  **🌐 Azure Deployment**:
 
 * Application is fully deployed on Azure App Service with:
@@ -87,12 +105,15 @@ Bulky is a complete e-commerce platform that simplifies online shopping and prod
   * Production appsettings.json
 
   * HTTPS enforced
+
  
+
 ###  **Live Demo**:
 👉 https://bulkywebapp-bua8a8daffc0azff.westeurope-01.azurewebsites.net/
 
 
 ---
+
 
 💻 **Project Structure**
 
@@ -158,6 +179,7 @@ Bulky/
 
 ---
 
+
 ## 🛠️ Tech Stack
 
 | Category           | Technology                                             |
@@ -174,7 +196,9 @@ Bulky/
 
 ---
 
+
 ## 📦 Getting Started
+
 
 ###  **Prerequisites**:
 
@@ -189,6 +213,7 @@ Bulky/
 ---
 
 ## 🔧 Installation
+
 
 ###  **1️⃣ Clone the Repository**:
 
@@ -225,21 +250,28 @@ Bulky/Bulky.sln
 
 ###  **3️⃣ Configure the Database Connection**:
 
+
 You must point the project to your SQL Server.
 
 1. Open the file:
+
 
 ```
 BulkyWeb/appsettings.json
 ```
 
+
+
 2. Find the ConnectionStrings section and update it with your SQL Server name:
+
 
 ```
 "ConnectionStrings": {
   "DefaultConnection": "Server=YOUR_SQL_SERVER;Database=Bulky;Trusted_Connection=True;MultipleActiveResultSets=true"
 }
 ```
+
+
 
 If you use SQL Server Authentication (username + password):
 
@@ -248,6 +280,8 @@ If you use SQL Server Authentication (username + password):
   "DefaultConnection": "Server=YOUR_SQL_SERVER;Database=Bulky;User Id=sa;Password=YourPassword;MultipleActiveResultSets=true;TrustServerCertificate=True"
 }
 ```
+
+
 
 ###  **4️⃣ Apply Database Migrations**:
 
@@ -258,6 +292,7 @@ If you use SQL Server Authentication (username + password):
   * View → Other Windows → Package Manager Console
 
 * Run:
+
 
 ```
 Update-Database
@@ -273,11 +308,13 @@ Update-Database
 
 
 
+
 ###  **5️⃣ Configure Stripe Payment**:
 
 * Step 1 — Add Stripe keys to appsettings.json
 
 * Open:
+
 
 ```
 BulkyWeb/appsettings.json
@@ -319,6 +356,7 @@ StripeConfiguration.ApiKey = builder.Configuration["Stripe:SecretKey"];
 ### This sets Stripe up globally so payment sessions can be created.
 
 
+
 ###  **6️⃣ Run the Application**:
 
 
@@ -335,3 +373,30 @@ The app will open at a URL such as:
 ```
 https://localhost:7020
 ```
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1.  Fork the repository.
+2.  Create a new branch for your feature or bug fix.
+3.  Make your changes and commit them with descriptive messages.
+4.  Push your changes to your fork.
+5.  Submit a pull request.
+
+---
+
+
+## 📬 Contact
+
+If you have any questions or suggestions, please feel free to contact me at email: ahmedsamir.dev.30@gmail.com.
+
+
+---
+
+
+## 💖 Thanks
+
+Thank you for checking out Bulky! We hope you find it useful.
